@@ -12,18 +12,21 @@ from llava.mm_utils import tokenizer_image_token, get_model_name_from_path, Keyw
 from PIL import Image
 import math
 
-from transformers import set_seed,AutoTokenizer,AutoModelForCausalLM
+from transformers import set_seed
 from Qwen_VL.modeling_qwen import QWenLMHeadModel
 from vcd_utils.vcd_add_noise import add_diffusion_noise
 from vcd_utils.vcd_sample import evolve_vcd_sampling
 evolve_vcd_sampling()
+from transformers import AutoTokenizer, AutoModelForCausalLM
+
+
 
 def eval_model(args):
     # Model
     disable_torch_init()
     model_path = os.path.expanduser(args.model_path)
     model_name = 'qwen-vl'
-    tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
+    tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen2-VL-7B-Instruct", trust_remote_code=True)
     tokenizer.padding_side = 'left'
     tokenizer.pad_token_id = tokenizer.eod_id
     model = QWenLMHeadModel.from_pretrained(
@@ -91,11 +94,11 @@ def eval_model(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model-path", type=str, default="/mnt/workspace/ckpt/Qwen-VL")
+    parser.add_argument("--model-path", type=str, default="Qwen/Qwen2-VL-7B-Instruct")
     parser.add_argument("--model-base", type=str, default=None)
     parser.add_argument("--image-folder", type=str, default="")
-    parser.add_argument("--question-file", type=str, default="tables/question.jsonl")
-    parser.add_argument("--answers-file", type=str, default="answer.jsonl")
+    parser.add_argument("--question-file", type=str, default="data/POPE/coco/questions.jsonl")
+    parser.add_argument("--answers-file", type=str, default="data/POPE/coco/answer.jsonl")
     parser.add_argument("--conv-mode", type=str, default="llava_v1")
     parser.add_argument("--num-chunks", type=int, default=1)
     parser.add_argument("--chunk-idx", type=int, default=0)
