@@ -6,27 +6,26 @@ from tqdm import tqdm
 import shortuuid
 import sys
 import os
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from llava.utils import disable_torch_init
 from llava.mm_utils import tokenizer_image_token, get_model_name_from_path, KeywordsStoppingCriteria
 from PIL import Image
 import math
 
-from transformers import set_seed
+from transformers import set_seed, AutoTokenizer, AutoModelForCausalLM
 from Qwen_VL.modeling_qwen import QWenLMHeadModel
 from vcd_utils.vcd_add_noise import add_diffusion_noise
 from vcd_utils.vcd_sample import evolve_vcd_sampling
 evolve_vcd_sampling()
-from transformers import AutoTokenizer, AutoModelForCausalLM
-
 
 
 def eval_model(args):
     # Model
     disable_torch_init()
     model_path = os.path.expanduser(args.model_path)
-    model_name = 'qwen-vl'
-    tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen2-VL-7B-Instruct", trust_remote_code=True)
+    model_name = 'Qwen2-VL-7B-Instruct'
+    tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
     tokenizer.padding_side = 'left'
     tokenizer.pad_token_id = tokenizer.eod_id
     model = QWenLMHeadModel.from_pretrained(
@@ -55,8 +54,8 @@ def eval_model(args):
         if args.use_cd:
             image_tensor_cd = add_diffusion_noise(image_tensor, args.noise_step)
         else:
-            image_tensor_cd = None   
-        
+            image_tensor_cd = None
+
         pred = model.generate(
             input_ids=input_ids.input_ids.cuda(),
             attention_mask=input_ids.attention_mask.cuda(),
@@ -72,10 +71,10 @@ def eval_model(args):
             temperature=args.temperature,
             top_p=args.top_p,
             top_k=args.top_k,
-            images = image_tensor,
+            images=image_tensor,
             images_cd=image_tensor_cd,
-            cd_beta = args.cd_beta,
-            cd_alpha = args.cd_alpha,
+            cd_beta=args.cd_beta,
+            cd_alpha=args.cd_alpha,
         )
 
         outputs = [
@@ -92,14 +91,15 @@ def eval_model(args):
         ans_file.flush()
     ans_file.close()
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--model-path", type=str, default="Qwen/Qwen2-VL-7B-Instruct")
     parser.add_argument("--model-base", type=str, default=None)
     parser.add_argument("--image-folder", type=str, default="")
-    parser.add_argument("--question-file", type=str, default="data/POPE/coco/questions.jsonl")
-    parser.add_argument("--answers-file", type=str, default="data/POPE/coco/answer.jsonl")
-    parser.add_argument("--conv-mode", type=str, default="llava_v1")
+    parser.add_argument("--question-file", type=str, default="data/POPE/coco/coco_pope_adversarial")
+    parser.add_argument("--answers-file", type=str, default="answer.jsonl")
+    parser.add_argument("--conv-mode", type=str, default="")
     parser.add_argument("--num-chunks", type=int, default=1)
     parser.add_argument("--chunk-idx", type=int, default=0)
     parser.add_argument("--temperature", type=float, default=1.0)

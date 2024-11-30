@@ -51,5 +51,4 @@
 {"image_id": 5282, "image": "COCO_val2014_000000005282.jpg", "objects": ["person", "car", "boat"]}
 {"image_id": 136355, "image": "COCO_val2014_000000136355.jpg", "objects": ["bowl", "dining table", "chair", "vase", "refrigerator", "orange", "potted plant", "bottle"]}
 {"image_id": 529590, "image": "COCO_val2014_000000529590.jpg", "objects": ["chair", "person", "cat"]}
-{"image_id": 398519, "image": "COCO_val2014_000000398519.jpg", "objects": ["giraffe", "person"]}
 {"image_id": 529592, "image": "COCO_val2014_000000529592.jpg", "objects": ["person", "potted plant", "frisbee"]}
