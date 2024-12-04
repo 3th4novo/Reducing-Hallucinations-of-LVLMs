@@ -11,7 +11,7 @@ print(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--gt_files", type=str, default="../data/POPE/coco/coco_pope_random.json")
-parser.add_argument("--gen_files", type=str, default="../data/POPE/results/answer_random.jsonl")
+parser.add_argument("--gen_files", type=str, default="../data/POPE/results/answer_random1.jsonl")
 args = parser.parse_args()
 
 # open ground truth answers
