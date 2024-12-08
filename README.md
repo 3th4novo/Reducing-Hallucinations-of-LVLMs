@@ -47,5 +47,5 @@ You can also switch back to the original sigmoid-beta noise scheduler in the `vc
 - [VCD](https://github.com/DAMO-NLP-SG/VCD?tab=readme-ov-file)
 - [POPE](https://github.com/RUCAIBox/POPE)
 - [Improved Denoising Diffusion Probabilistic Models](https://arxiv.org/pdf/2102.09672)
-- [On the Importance of Noise Scheduling for Diffusion Models](On the Importance of Noise Scheduling for Diffusion Models)
+- [On the Importance of Noise Scheduling for Diffusion Models](https://arxiv.org/pdf/2301.10972)
 - [LLaVA 1.5](https://github.com/haotian-liu/LLaVA)
