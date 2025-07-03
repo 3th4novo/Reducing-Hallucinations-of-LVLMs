@@ -1,4 +1,4 @@
-# Reducing Hallucinations of LVLMs: Improving VCD with Cosine-Beta Noise Scheduling
+# Scheduling Noise for Better VCD: Reducing Hallucinations in LVLMs
 
 This is the official GitHub repository of Reducing Hallucinations of LVLMs: Improving VCD with Cosine-Beta Noise Scheduling. In this project, we employed a cosine-beta diffusion noise scheduler that can further improve the performance of the state-of-the-art train-free method VCD in the task of reducing hallucinations of LVLMs.
 
